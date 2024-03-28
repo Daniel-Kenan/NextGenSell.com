@@ -8,3 +8,4 @@ django-defender
 gunicorn==20.1.0
 django-heroku 
 psycopg2
+qrcode
