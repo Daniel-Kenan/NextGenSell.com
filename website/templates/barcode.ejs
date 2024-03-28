@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generate Barcode</title>
+    <%- include('partials/static.ejs') %>
+    <link rel="stylesheet" href="style.css">
+
+    <script src="JsBarcode.all.min.js"></script>
+</head>
+<body>
+    <%- include('partials/header.ejs') %>
+    <script>document.getElementById("header").classList.remove("header-transparent")</script>
+    <section>
+        <div class="container" style="margin-top: 80px ;text-align: center;">
+            <h1>Generate Barcodes</h1>
+            <div >
+                
+                <div style="display: flex;justify-content: center;align-items: center;">
+                    <label for="numOfBarcodes">Number of Barcodes:</label>
+                    <input type="number" class="class-form" id="numOfBarcodes" placeholder="Quantity" style="border-radius: 5px;">
+                <label >&nbsp;&nbsp; Choose Type: </label> <div> &nbsp;&nbsp; </div>
+                    <select id="barcodeType" name="barcodeType"  class="form-select" style="width: 120px;">
+                        <option value="CODE128">CODE128 auto</option>
+                        <option value="CODE128A">CODE128 A</option>
+                        <option value="CODE128B">CODE128 B</option>
+                        <option value="CODE128C">CODE128 C</option>
+                        <option value="EAN13">EAN13</option>
+                        <option value="EAN8">EAN8</option>
+                        <option value="UPC">UPC</option>
+                        <option value="CODE39">CODE39</option>
+                        <option value="ITF14">ITF14</option>
+                        <option value="ITF">ITF</option>
+                        <option value="MSI">MSI</option>
+                        <option value="MSI10">MSI10</option>
+                        <option value="MSI11">MSI11</option>
+                        <option value="MSI1010">MSI1010</option>
+                        <option value="MSI1110">MSI1110</option>
+                        <option value="pharmacode">Pharmacode</option>
+                </select>
+                </div>
+            </div>
+            <div class="button-group" style="display: flex;justify-content: center;">
+                <button onclick="generateBarcodes()">Generate Barcodes</button>
+                <button onclick="printBarcodes()">Print Barcodes</button> 
+                
+              
+            </div>
+            <svg id="barcode" style="display: none;"></svg>
+            <hr>
+        </div>
+
+    </section>
+     
+    <script>
+        function generateBarcode(input,type) {
+            JsBarcode("#barcode", input,{"format": type});
+            var barcodeSVG = document.getElementById("barcode").outerHTML;
+            return barcodeSVG;
+        }
+
+        function generateBarcodes() {
+            let barcode_type = document.getElementById("barcodeType").value; 
+            var numOfBarcodes = parseInt(document.getElementById('numOfBarcodes').value);
+            if (isNaN(numOfBarcodes) || numOfBarcodes <= 0) {
+                Swal.fire({
+  icon: "error",
+  title: "Oops...",
+  text: "'Please enter a valid number greater than 0.",
+
+});
+            
+                return;
+            }else if(numOfBarcodes>8 || numOfBarcodes <= 0){
+                Swal.fire({
+  icon: "error",
+  title: "Free Version Max!",
+  text: "You are using free version therefore you are unable to enter a number greater than 8",
+  footer: '<a href="/">Purchase NextGenSell</a>'
+}); return; 
+            }
+            
+
+            var generatedBarcodes = new Set(); // To store unique barcodes
+            var outputDiv = document.createElement("div");
+
+            for (var i = 0; i < numOfBarcodes; i++) {
+                var timestamp = new Date().getTime().toString();
+                var randomNum = Math.floor(Math.random() * 1000); // Generate a random number between 0 and 999
+                var input = timestamp + "" + randomNum;
+
+                // Ensure uniqueness
+                while (generatedBarcodes.has(input)) {
+                    randomNum = Math.floor(Math.random() * 1000);
+                    input = timestamp + "" + randomNum;
+                }
+
+                generatedBarcodes.add(input);
+                var barcodeSVG = generateBarcode(input,barcode_type);
+                outputDiv.innerHTML += barcodeSVG;
+            }
+
+            // Remove previous output and append new barcodes
+            var oldOutputDiv = document.getElementById("outputDiv");
+            if (oldOutputDiv) {
+                oldOutputDiv.remove();
+            }
+
+            outputDiv.setAttribute("id", "outputDiv");
+            document.body.appendChild(outputDiv);
+        }
+
+        function printBarcodes() {
+            window.print();
+        }
+    </script>
+   
+</body>
+</html>

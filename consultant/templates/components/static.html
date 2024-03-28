@@ -1,0 +1,147 @@
+{% load static %}
+<!--   Core JS Files   -->
+      <script src="{% static 'assets/js/core/jquery.min.js' %}"></script>
+      <script src="{% static 'assets/js/core/popper.min.js' %}"></script>
+      <script src="{% static 'assets/js/core/bootstrap.min.js' %}"></script>
+      <script src="{% static 'assets/js/plugins/perfect-scrollbar.jquery.min.js' %}"></script>
+      <!--  Google Maps Plugin    -->
+      <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_KEY_HERE"></script>
+      <!-- Chart JS -->
+      <script src="{% static 'assets/js/plugins/chartjs.min.js' %}"></script>
+      <!--  Notifications Plugin    -->
+      <script src="{% static 'assets/js/plugins/bootstrap-notify.js' %}"></script>
+      <!-- Control Center for Now Ui Dashboard: parallax effects, scripts for the example pages etc -->
+      <script src="{% static 'assets/js/now-ui-dashboard.min.js?v=1.5.0' %}" type="text/javascript"></script><!-- Now Ui Dashboard DEMO methods, don't include it in your project! -->
+      <script src="{% static 'assets/demo/demo.js' %}"></script>
+      
+      <script>
+        $(document).ready(function() {
+          // Javascript method's body can be found in assets/js/demos.js
+          demo.initDashboardPageCharts();
+    
+        });
+      </script>
+
+      <script>
+        // Function to show the SweetAlert
+        function showAlert(event,elem) {
+            // Prevent default behavior of anchor tag
+            if (event.target.tagName === 'A') {
+                return; // Don't disturb hyperlink behavior
+            }
+            
+            event.preventDefault();
+    
+            let client = elem.cells[1].textContent.trim()
+            let enterprise = elem.cells[0].textContent.trim();
+            
+            // Show SweetAlert when the link is clicked
+            Swal.fire({
+                title: `${client} of ${enterprise} `,
+                text: 'You clicked on an enterprise link!',
+                confirmButtonText: 'Ok',
+                showCancelButton: true,
+                showCloseButton: true,
+                html: `
+                    <div style="font-size: 14px; line-height: 1.4; color: #333;">
+                        <p>Select an action and provide comments:</p>
+                        <div style="display: flex; flex-direction: column; gap: 10px;">
+                            <div>
+                                <label><input type="radio" name="action" value="log" checked> <span style="margin-left: 5px;">Log</span></label>
+                                <label ><input type="radio" name="action" value="move"> <span style="margin-left: 5px;">Move Client</span></label>
+                            </div>
+                            <div id="logOptions">
+                                <br>
+                                <label>Select log type:</label>
+                                <select id="logTypeSelect" style="width: 100%; padding: 8px; border-radius: 4px; border: 1px solid #ccc;">
+                                    <option value="email">Email</option>
+                                    <option value="call">Call</option>
+                                    <option value="whatsapp">WhatsApp</option>
+                                </select>
+                            </div>
+                            <div id="moveOptions" style="display: none;">
+                                <br>
+                                <label>Move the client to:</label>
+                                <select id="moveClientSelect" style="width: 100%; padding: 8px; border-radius: 4px; border: 1px solid #ccc;">
+                                    <option value="existing">Existing</option>
+                                    <option value="defaulted">Defaulted</option>
+                                </select>
+                            </div>
+                            <br>
+                            <textarea id="comment" placeholder="Add your comment here..." style="width: 100%; height: 80px; padding: 8px; border-radius: 4px; border: 1px solid #ccc;"></textarea>
+                        </div>
+                    </div>
+                `,
+                onBeforeOpen: () => {
+                    const radioButtons = document.querySelectorAll('input[name="action"]');
+                    radioButtons.forEach(radioButton => {
+                        radioButton.addEventListener('change', () => {
+                            const logOptions = document.getElementById('logOptions');
+                            const moveOptions = document.getElementById('moveOptions');
+                            logOptions.style.display = radioButton.value === 'log' ? 'block' : 'none';
+                            moveOptions.style.display = radioButton.value === 'move' ? 'block' : 'none';
+                        });
+                    });
+                },
+                preConfirm: () => {
+                    const action = document.querySelector('input[name="action"]:checked');
+                    const logTypeSelect = document.getElementById('logTypeSelect');
+                    const moveClientSelect = document.getElementById('moveClientSelect');
+                    const comment = document.getElementById('comment').value;
+            
+                    if (!action) {
+                        Swal.showValidationMessage('Please select an action');
+                    } else {
+                        const selectedAction = action.value;
+                        let outcomeMessage = '';
+            
+                        if (selectedAction === 'log') {
+                            const selectedLogType = logTypeSelect.value;
+                            switch (selectedLogType) {
+                                case 'email':
+                                    // Email log logic
+                                    outcomeMessage = 'Logged email successfully';
+                                    break;
+                                case 'call':
+                                    // Call log logic
+                                    outcomeMessage = 'Logged call successfully';
+                                    break;
+                                case 'whatsapp':
+                                    // WhatsApp log logic
+                                    outcomeMessage = 'Logged WhatsApp message successfully';
+                                    break;
+                            }
+                            return {
+                                action: selectedAction,
+                                logType: selectedLogType,
+                                comment: comment,
+                                outcomeMessage: outcomeMessage
+                            };
+                        } else if (selectedAction === 'move') {
+                            // Move client action logic
+                            outcomeMessage = 'Client moved successfully';
+                            return {
+                                action: selectedAction,
+                                moveOption: moveClientSelect.value,
+                                comment: comment,
+                                outcomeMessage: outcomeMessage
+                            };
+                        }
+                    }
+                }
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    console.log("Action:", result.value.action);
+                    if (result.value.logType) {
+                        console.log("Log Type:", result.value.logType);
+                    }
+                    if (result.value.moveOption) {
+                        console.log("Move Option:", result.value.moveOption);
+                    }
+                    console.log("Comment:", result.value.comment);
+                    console.log("Outcome Message:", result.value.outcomeMessage);
+                }
+            });
+            
+        }
+    </script>

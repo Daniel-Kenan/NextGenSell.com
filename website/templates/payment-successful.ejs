@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Payment Successful</title>
+  <style>
+    .section2 {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+      background-color: #f4f4f4;
+      font-family: 'Arial', sans-serif;
+    }
+
+    .container {
+      text-align: center;
+    }
+
+    #celebration-svg {
+      width: 150px;
+      height: 150px;
+    }
+
+    /* Add styles for the confetti container */
+    #confetti-container {
+      position: fixed;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      pointer-events: none;
+      z-index: 1;
+    }
+  </style>
+  <%- include('partials/static.ejs') %>
+  
+</head>
+<body>
+  <%- include('partials/header.ejs') %>
+  <section class="section2">
+    <div class="container">
+      <h1>Payment Successful!</h1>
+     <img src="/images/box-svgrepo-com.svg" alt="" height="150" width="150">
+      <p>Your payment was successful. Thank you for choosing our services!</p>
+    </div>
+  
+    <!-- Add the confetti container -->
+    <canvas id="confetti-container"></canvas>
+   
+    <!-- Include Confetti.js library -->
+    <script src="https://cdn.jsdelivr.net/npm/confetti-js"></script>
+    <script>
+      // Initialize Confetti.js
+      // const confettiSettings = { target: 'confetti-container' };
+      const confettiSettings = {
+        target: 'confetti-container',
+        max: 665,
+        start_from_edge:true,
+        animate: true,
+        respawn:false,
+        clock: 50 ,
+        colors: [
+          [255, 215, 0], // Gold
+          [255, 99, 71], // Tomato
+          [0, 255, 255], // Cyan
+          [255, 0, 255], // Magenta
+          [50, 205, 50]  // Lime Green
+          // Add more colors in the format [R, G, B] as needed
+        ],
+        props: ['circle', 'square', 'triangle', 'line'],
+        rotate: true,
+        width: window.innerWidth,
+        height: window.innerHeight +50
+      };
+    
+      const confetti = new ConfettiGenerator(confettiSettings);
+      confetti.render();
+      
+      setTimeout(()=>{
+        document.getElementById("header").classList.remove("header-transparent")
+      },1200)
+    
+    </script>
+    
+  </section>  
+  <%- include('partials/footer.ejs') %>
+  <%- include('partials/vendor.ejs') %>
+</body>
+</html>

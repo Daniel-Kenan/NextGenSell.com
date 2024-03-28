@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Client Information Form</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
+        }
+        
+        h2 {
+            text-align: center;
+            margin-top: 20px;
+        }
+        
+        form {
+            max-width: 800px;
+            margin: 20px auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        fieldset {
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            padding: 20px;
+        }
+        
+        legend {
+            font-size: 1.2em;
+            font-weight: bold;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        
+        input[type="text"],
+        input[type="email"],
+        textarea,
+        select {
+            width: calc(100% - 22px);
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        
+        textarea {
+            resize: vertical;
+        }
+        
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            display: block;
+            margin: 0 auto;
+        }
+        
+        button:hover {
+            background-color: #45a049;
+        }
+        
+    </style>
+</head>
+<body>
+    <h2>Client Information Form</h2>
+    <form action="#" method="post">
+        <fieldset>
+            <legend>Client Details:</legend>
+            <label for="business_name">Business Name/Client Name:</label>
+            <input type="text" id="business_name" name="business_name" required>
+            <label for="contact_name">Contact Person's Name:</label>
+            <input type="text" id="contact_name" name="contact_name">
+            <label for="position">Position/Title:</label>
+            <input type="text" id="position" name="position">
+            <label for="email">Email Address:</label>
+            <input type="email" id="email" name="email" required>
+            <label for="phone">Phone Number:</label>
+            <input type="text" id="phone" name="phone">
+            <label for="address">Business Address:</label>
+            <input type="text" id="address" name="address">
+            <label for="website">Website URL:</label>
+            <input type="text" id="website" name="website">
+        </fieldset>
+        <fieldset>
+            <legend>Business Details:</legend>
+            <label for="business_type">Type of Business:</label>
+            <select id="business_type" name="business_type">
+                <option value="Retail">Retail</option>
+                <option value="Restaurant">Restaurant</option>
+                <option value="Salon">Salon</option>
+            </select>
+            <label for="industry">Industry/Sector:</label>
+            <input type="text" id="industry" name="industry">
+            <label for="employees">Number of Employees:</label>
+            <input type="text" id="employees" name="employees">
+            <label for="locations">Number of Locations:</label>
+            <input type="text" id="locations" name="locations">
+            <label for="years">Years in Operation:</label>
+            <input type="text" id="years" name="years">
+        </fieldset>
+        <fieldset>
+            <legend>Current Situation:</legend>
+            <label for="current_pos">Current POS System:</label>
+            <input type="text" id="current_pos" name="current_pos">
+            <label for="reasons">Reasons for Seeking a New POS System:</label>
+            <textarea id="reasons" name="reasons"></textarea>
+            <label for="challenges">Challenges with Current System:</label>
+            <textarea id="challenges" name="challenges"></textarea>
+        </fieldset>
+        
+        <fieldset>
+            <legend>Specific Needs and Requirements:</legend>
+            <label for="desired_features">Desired Features and Functionalities in a New POS System:</label>
+            <textarea id="desired_features" name="desired_features"></textarea>
+            <label for="integration_requirements">Integration Requirements with Existing Systems:</label>
+            <textarea id="integration_requirements" name="integration_requirements"></textarea>
+            <label for="budget">Budget Constraints:</label>
+            <textarea id="budget" name="budget"></textarea>
+        </fieldset>
+        
+        <fieldset>
+            <legend>Transaction Details:</legend>
+            <label for="avg_transactions">Average Number of Transactions per Day/Month:</label>
+            <input type="text" id="avg_transactions" name="avg_transactions">
+            <label for="peak_hours">Peak Hours/Busy Periods:</label>
+            <input type="text" id="peak_hours" name="peak_hours">
+            <label for="payment_methods">Types of Payment Methods Accepted:</label>
+            <textarea id="payment_methods" name="payment_methods"></textarea>
+        </fieldset>
+        
+        <fieldset>
+            <legend>Customer Base:</legend>
+            <label for="customer_demographics">Demographics of Typical Customers:</label>
+            <textarea id="customer_demographics" name="customer_demographics"></textarea>
+            <label for="loyalty_programs">Customer Loyalty Programs:</label>
+            <textarea id="loyalty_programs" name="loyalty_programs"></textarea>
+            <label for="crm_needs">CRM Needs:</label>
+            <textarea id="crm_needs" name="crm_needs"></textarea>
+        </fieldset>
+        
+        <fieldset>
+            <legend>Staff Training and Support:</legend>
+            <label for="technical_expertise">Level of Technical Expertise Among Staff:</label>
+            <select id="technical_expertise" name="technical_expertise">
+                <option value="Low">Low</option>
+                <option value="Medium">Medium</option>
+                <option value="High">High</option>
+            </select>
+            <label for="training_availability">Availability for Training:</label>
+            <select id="training_availability" name="training_availability">
+                <option value="Yes">Yes</option>
+                <option value="No">No</option>
+            </select>
+            <label for="support_method">Preferred Method of Support:</label>
+            <select id="support_method" name="support_method">
+                <option value="Phone">Phone</option>
+                <option value="Email">Email</option>
+                <option value="Onsite">Onsite</option>
+            </select>
+        </fieldset>
+        
+        <fieldset>
+            <legend>Future Plans:</legend>
+            <label for="expansion_plans">Expansion Plans:</label>
+            <textarea id="expansion_plans" name="expansion_plans"></textarea>
+            <label for="scalability_requirements">Scalability Requirements:</label>
+            <textarea id="scalability_requirements" name="scalability_requirements"></textarea>
+        </fieldset>
+        
+        <fieldset>
+            <legend>Compliance and Regulations:</legend>
+            <label for="compliance_requirements">Compliance Requirements:</label>
+            <textarea id="compliance_requirements" name="compliance_requirements"></textarea>
+            <label for="regulations">Industry-Specific Regulations:</label>
+            <textarea id="regulations" name="regulations"></textarea>
+        </fieldset>
+        
+        <fieldset>
+            <legend>Feedback and Interactions:</legend>
+            <label for="previous_interactions">Previous Interactions/Feedback:</label>
+            <textarea id="previous_interactions" name="previous_interactions"></textarea>
+            <label for="meeting_notes">Notes from Meetings/Discussions:</label>
+            <textarea id="meeting_notes" name="meeting_notes"></textarea>
+        </fieldset>
+        
+        <fieldset>
+            <legend>Competitive Landscape:</legend>
+            <label for="competitors">Key Competitors:</label>
+            <textarea id="competitors" name="competitors"></textarea>
+            <label for="unique_selling_points">Unique Selling Points/Competitive Advantages:</label>
+            <textarea id="unique_selling_points" name="unique_selling_points"></textarea>
+        </fieldset>
+        
+        <fieldset>
+            <legend>Timeline and Decision-Making Process:</legend>
+            <label for="decision_timeline">Decision-Making Timeline:</label>
+            <input type="text" id="decision_timeline" name="decision_timeline">
+            <label for="decision_makers">Key Decision Makers/Stakeholders:</label>
+            <textarea id="decision_makers" name="decision_makers"></textarea>
+        </fieldset>
+        
+        <button type="submit">Submit</button>
+    </form>
+</body>
+</html>

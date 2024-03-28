@@ -1,0 +1,59 @@
+<div class="sidebar" data-color="orange">
+    <!--
+      Tip 1: You can change the color of the sidebar using: data-color="blue | green | orange | red | yellow"
+  -->
+    <div class="logo">
+      <a href="http://www.creative-tim.com" class="simple-text logo-mini">
+        CS
+      </a>
+      <a href="http://www.creative-tim.com" class="simple-text logo-normal">
+        Admin Support
+      </a>
+    </div>
+    <div class="sidebar-wrapper" id="sidebar-wrapper">
+      <ul class="nav">
+        {% comment %} <li class="{% if active_view == 'dashboard' %}active{% endif %}">
+          <a href="{% url "cs_dashboard" %}">
+            <i class="now-ui-icons design_app"></i>
+            <p>Dashboard</p>
+          </a>
+        </li>   {% endcomment %}
+        <li class="{% if active_view == 'potential-clients' %}active{% endif %}">
+          <a href="{% url "cs_potential_clients" %}">
+            <i class="now-ui-icons business_badge"></i>
+            <p>Potential Clients</p>
+          </a>
+        </li>
+        {% comment %} <li class="{% if active_view == 'existing-clients' %}active{% endif %}">
+          <a href="{% url "cs_existing_clients" %}">
+            <i class="now-ui-icons business_badge"></i>
+            <p>Existing Clients</p>
+          </a>
+        </li> {% endcomment %}
+        {% comment %} <li class="{% if active_view == 'product-keys' %}active{% endif %}">
+          <a href="{% url "cs_product_keys" %}">
+            <i class="now-ui-icons objects_key-25"></i>
+            <p>Product Keys</p>
+          </a>
+        </li>
+        <li class="{% if active_view == 'notifications' %}active{% endif %}">
+          <a href="{% url "cs_notifications" %}">
+            <i class="now-ui-icons ui-1_bell-53"></i>
+            <p>Notifications</p>
+          </a>
+        </li>
+        <li class="{% if active_view == 'profile' %}active{% endif %}">
+          <a href="{% url "cs_profile" %}">
+            <i class="now-ui-icons users_single-02"></i>
+            <p>User Profile</p>
+          </a>
+        </li> {% endcomment %}
+        <li class="active-pro">
+          <a href="./upgrade.html">
+            <i class="now-ui-icons arrows-1_cloud-download-93"></i>
+            <p>Sign Out</p>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
