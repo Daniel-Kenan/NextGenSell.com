@@ -3,3 +3,4 @@ website/__pycache__
 __pycache__
 website/migrations/__pycache__
 config/__pycache__
+db.sqlite3
