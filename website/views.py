@@ -18,10 +18,10 @@ import json
 
 def login_view(request):
     if request.method == 'POST':
-        data = json.loads(request.body)
-        email = data['email']
-        password = data['password']
+        email = request.POST.get('email')
+        password = request.POST.get('password')
         user = authenticate(request, email=email, password=password)
+        print(user)
         if user is not None:
             login(request, user)
             # Redirect to a success page or wherever you want
