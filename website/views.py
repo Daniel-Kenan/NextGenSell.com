@@ -9,18 +9,19 @@ from rest_framework.permissions import AllowAny
 from datetime import datetime
 from django.utils.decorators import method_decorator
 from django.views import View
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, get_user_model
 import qrcode
 import os
 from django.contrib import messages
 from django.urls import reverse
 import json
+from django.contrib.auth.hashers import make_password
 
 def login_view(request):
     if request.method == 'POST':
         email = request.POST.get('email')
         password = request.POST.get('password')
-        user = authenticate(request, email=email, password=password)
+        user = authenticate(request, email=email, password=make_password(password))
         print(user)
         if user is not None:
             login(request, user)
