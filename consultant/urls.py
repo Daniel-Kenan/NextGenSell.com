@@ -1,13 +1,16 @@
 from django.urls import path
-from .views import dashboard,profile,existing_clients,potential_clients,productkeys,notifications,bussiness_form
+from . import views
 from django.views.decorators.csrf import csrf_exempt
 
+app_name = 'consultancy'
+
 urlpatterns = [
-    path('', dashboard, name="cs_dashboard"),
-    path('potential_clients/', potential_clients, name="cs_potential_clients"),
-    path('existing_clients/',existing_clients , name="cs_existing_clients"),
-    path('product_keys/', productkeys, name="cs_product_keys"),
-    path('notifications/', notifications, name="cs_notifications"),
-    path('profile/', profile, name="cs_profile"),
-    path('bussiness/', bussiness_form, name="cs_Bform"),   
+    path('', views.dashboard, name="cs_dashboard"),
+    path('potential_clients/', views.potential_clients, name="cs_potential_clients"),
+    path('existing_clients/',views.existing_clients , name="cs_existing_clients"),
+    path('product_keys/', views.productkeys, name="cs_product_keys"),
+    path('notifications/', views.notifications, name="cs_notifications"),
+    path('profile/', views.profile, name="cs_profile"),
+    path('bussiness/', views.bussiness_form, name="cs_Bform"),  
+     path('add-client/', views.add_client, name='add_client'), 
 ]

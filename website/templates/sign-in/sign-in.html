@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 </head>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <body>
     {% load static %}
     
@@ -131,7 +133,7 @@
             flex: 0 0 30%;
             align-items: start;
             justify-content: start;
-            background: no-repeat url("https://source.unsplash.com/random/1000x1600/?wallpaper");
+            background: no-repeat url('/static/assets/img/601928a81a3df801434faa41_examples of mem 3.jpg');
             background-position: 50%;
             background-size: cover;
             overflow: hidden;
@@ -251,10 +253,10 @@
 <div class="flex-container">
 	<div class="left-column">
 		<div class="overlay">
-			<p>NextGenSell<p>
-			<p class="blurb">Lorem ipsum dolor, sit amet consectetur adipisicing elit.</p>
+			<img width="150"  src={% static "images/Copy of Add a heading (1).png" %} />
+			{% comment %} <p class="blurb">Lorem ipsum dolor, sit amet consectetur adipisicing elit.</p> {% endcomment %}
             <div id="qrcode"></div>
-            <img src="{{ qr_code_path }}" alt="QR Code">
+            {% comment %} <img src="{{ qr_code_path }}" alt="QR Code"> {% endcomment %}
             <script>
                 var qrcode = new QRCode("test", {
                     text: "http://jindo.dev.naver.com/collie",
@@ -275,7 +277,32 @@
 					<span>Log in</span>
 				</div>
 				<div class="body">
-					<form action="/login" method="POST">
+
+					<form action="{% url 'login_view' %}" method="POST">
+                        {% if error_message %}
+    <div class="alert alert-danger">{{ error_message }}</div>
+{% endif %}
+
+{% for message in error_messages %}
+    
+<script>
+    // Replace "{{ message }}" with your actual message
+    var message = "{{ message }}";
+  
+    // Create the alert using swal
+    Swal.fire({
+        title: "Error!",
+        text: message,
+        icon: "error",
+        timer: 3000, // Time in milliseconds (e.g., 3000 = 3 seconds)
+        timerProgressBar: true, // Show timer progress bar
+        toast: true,
+        position: "top-end", // Toast position
+        showConfirmButton: false // Hide the "OK" button
+      });
+  </script>
+{% endfor %}
+                        {% csrf_token %}
 						<div class="form-control">
 							<label for="email">Email Address</label>
 							<input type="email" id="email" name="email" required />

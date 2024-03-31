@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Feedback Form</title>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+</head>
+<body>
+    <script>
+        function showForm() {
+            Swal.fire({
+                title: 'AFTER UPDATE',
+                text: "That thing is still around?",
+                html:
+                    '<input id="enterprise" class="swal2-input" placeholder="Enterprise" required>' +
+                    '<input id="contactPerson" class="swal2-input" placeholder="Contact Person" required>' +
+                    '<input id="position" class="swal2-input" placeholder="Position">' +
+                    '<input id="phone" class="swal2-input" placeholder="Phone">' +
+                    '<input id="website" class="swal2-input" placeholder="Website">',
+                focusConfirm: false,
+                preConfirm: () => {
+                    return {
+                        enterprise: document.getElementById('enterprise').value,
+                        contactPerson: document.getElementById('contactPerson').value,
+                        position: document.getElementById('position').value,
+                        phone: document.getElementById('phone').value,
+                        feedback: document.getElementById('feedback').value,
+                        website: document.getElementById('website').value
+                    }
+                },
+                showCancelButton: true,
+                cancelButtonText: 'Cancel',
+                confirmButtonText: 'Submit',
+                reverseButtons: true,
+                allowOutsideClick: false
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // Handle form submission here
+                    console.log('Submitted:', result.value);
+                    Swal.fire('Thank you!', 'Your feedback has been submitted.', 'success');
+                }
+            });
+        }
+        
+        // Call the showForm function when the page loads (for demonstration)
+        document.addEventListener('DOMContentLoaded', function() {
+            showForm();
+        });
+    </script>
+</body>
+</html>

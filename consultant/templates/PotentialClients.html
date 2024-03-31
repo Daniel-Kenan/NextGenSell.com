@@ -76,7 +76,7 @@
               <div class="card">
                 <div class="card-header" style="display:flex;justify-content:space-between;">
                   <h4 class="card-title"> These are our Potential Clients</h4>
-                  <button style="font-size:12px;padding:10px;border-radius:10px">+ PTC</button>
+                  <button style="font-size:12px;padding:10px;border-radius:10px" onclick="addPTC()">+ PTC</button>
                 </div>
                 <div class="card-body">
                   <div class="table-responsive">
@@ -87,24 +87,25 @@
                             <th><b>Contact Person</b></th>
                             <th><b>Position</b></th>
                             <th><b>Phone</b></th>
-                            <th><b>Feedback</b></th>
+                            <th><b>Email</b></th>
+                            <th><b>LastInteraction</b></th>
                             <th><b>Website</b></th>
                             <th><b>Status</b></th>
                         </tr>
                     </thead>
                     <tbody>
+                      {% for client in clients %}
                       <tr onclick="showAlert(event,this)">
-                        <td><a href="{% url "cs_Bform" %}">Tiger Nixon</a></td>
-                        <td>System Architect</td>
-                        <td>Edinburgh</td>
-                        <td>068 184 5488</td>
+                        <td><a href="{% url "consultancy:cs_Bform" %}">{{ client.name }}</a></td>
+                        <td>{{ client.contact_name }}</td>
+                        <td>{{ client.position }}</td> 
+                        <td>{{ client.phone }}</td>
+                        <td>{{ client.email }}</td>
                         <td>2011/04/25</td>
                         <td><a href="#">http://localhost:8000/</a></td>
-                        <td >
-    <a href="{% url "cs_Bform" %}" style="background-color: #F0F0F0; border-radius: 10px; display: inline-block; padding: 1px 15px;color:black;text-decoration:none;border:1px solid black;">view</a>
-</td>
+                        <td ><a href="{% url "consultancy:cs_Bform" %}" style="background-color: #F0F0F0; border-radius: 10px; display: inline-block; padding: 1px 15px;color:black;text-decoration:none;border:1px solid black;">view</a>  </td>
                       </tr>
-
+                      {% endfor %}
                     </tbody>
                     </table>
                   </div>

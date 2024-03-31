@@ -145,3 +145,71 @@
             
         }
     </script>
+    <script>
+
+        function addPTC() {
+            Swal.fire({
+                title: 'Add a potential client',
+                text: 'Please fill in all the fields to add a client',
+                width: 650,
+                showCloseButton: true,
+                html:
+                '<div style="font-size: 14px;">' +
+                    '<label for="enterprise">Enterprise:</label>' +
+                    '<input id="enterprise" class="swal2-input" placeholder="Enterprise" style="font-size: 14px;" required>' +
+                    '<label for="contactPerson">Contact Person:</label>' +
+                    '<input id="contactPerson" class="swal2-input" placeholder="Contact Person" style="font-size: 14px;" required>' +
+                    '<label for="position">Position:</label>' +
+                    '<input id="position" class="swal2-input" placeholder="Position" style="font-size: 14px;">' +
+                    '<label for="phone">Phone:</label>' +
+                    '<input id="phone" class="swal2-input" placeholder="Phone" style="font-size: 14px;">' +
+                    '<label for="email">Email:</label>' +
+                    '<input id="email" class="swal2-input" placeholder="Email" style="font-size: 14px;" type="email">' +
+                    '<label for="website">Website:</label>' +
+                    '<input id="website" class="swal2-input" placeholder="Website" style="font-size: 14px;">' +
+                '</div>',
+                focusConfirm: false,
+                showCancelButton: true,
+                cancelButtonText: 'Cancel',
+                confirmButtonText: 'Submit',
+                reverseButtons: true,
+                allowOutsideClick: false,
+                preConfirm: () => {
+                    return {
+                        enterprise: document.getElementById('enterprise').value,
+                        contactPerson: document.getElementById('contactPerson').value,
+                        position: document.getElementById('position').value,
+                        phone: document.getElementById('phone').value,
+                        email: document.getElementById('email').value, // Add email field
+                        website: document.getElementById('website').value,
+                    };
+                }
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // Send form data to Django backend for processing
+                    fetch('{% url "consultancy:add_client" %}', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRFToken': '{{ csrf_token }}' // Include CSRF token
+                        },
+                        body: JSON.stringify(result.value)
+                    })
+                    .then(response => {
+                        if (response.ok) {
+                            Swal.fire('Thank you!', 'Your client has been added.', 'success');
+                        } else {
+                            Swal.fire('Oops...', 'Something went wrong!', 'error');
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        Swal.fire('Oops...', 'Something went wrong!', 'error');
+                    });
+                }
+            });
+        }
+        
+        
+
+    </script>
