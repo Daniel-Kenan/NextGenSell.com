@@ -20,6 +20,9 @@ from django.conf.urls.static import static
 from rest_framework.schemas import get_schema_view
 from django.views.generic import TemplateView
 from django.contrib.auth.decorators import user_passes_test
+from django.urls import re_path
+from django.views.static import serve
+from django.conf import settings
 
 def user_is_admin(user):
     return user.is_authenticated and user.is_staff
@@ -46,3 +49,5 @@ urlpatterns = [
 ]
 if settings.DEBUG:
     urlpatterns += static(settings.STATIC_URL,document_root=settings.STATIC_ROOT)
+else: urlpatterns += [ re_path(r'^media/(?P<path>.*)$', serve,{'document_root': settings.MEDIA_ROOT}),
+    re_path(r'^static/(?P<path>.*)$', serve,{'document_root': settings.STATIC_ROOT})]

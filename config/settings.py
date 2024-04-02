@@ -26,7 +26,7 @@ import psycopg2
 SECRET_KEY = 'django-insecure-p2igf%7x++wpp01vqz^0^h6d7-gt!=)=6gzk0oib3-7)w*x0o6'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG =  True    
+DEBUG = True if os.environ.get('DEBUG')  else False
 
 ALLOWED_HOSTS = ["*"]
 
@@ -86,11 +86,6 @@ WSGI_APPLICATION = 'config.wsgi.application'
 DATABASES = {
     'default':  
       dj_database_url.config(default=os.environ.get('DATABASE_URL'))
-#     if os.environ.get("PROD") else 
-#    {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',
-#    }     
 }
 
 # Password validation
@@ -128,7 +123,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 # SSL_REDIRECT = True if os.environ.get("PROD") else False
 STATIC_URL = 'static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+STATIC_ROOT = BASE_DIR / 'static'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'website', 'public'),
     os.path.join(BASE_DIR, 'consultant', 'public'),

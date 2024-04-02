@@ -16,21 +16,35 @@ from django.contrib import messages
 from django.urls import reverse
 import json
 from django.contrib.auth.hashers import make_password
+from django.contrib.auth.models import User
 
 def login_view(request):
     if request.method == 'POST':
         email = request.POST.get('email')
         password = request.POST.get('password')
-        user = authenticate(request, email=email, password=make_password(password))
+        user = authenticate(request, email=email, password=password) 
+        tmp = User.objects.get(email="ashley.malebe@strawberrysoft.co.za")
+        email = email.strip() if email else ''
+        password = password.strip() if password else ''
+        print(f"email = {email}  : {tmp.email} ")
+        print(f"email = {password}  : {tmp.password} ")
+        # user = User.objects.get(email=email)
         print(user)
         if user is not None:
             login(request, user)
             # Redirect to a success page or wherever you want
             return redirect('success_page')
         else:
-            # Authentication failed
-            messages.error(request, 'Invalid email or password.')  # Add error message
-            return redirect('clientsignin')  # Redirect to the sign-in page with error message
+            try:
+                # Attempt to get the user by email
+                user = User.objects.get(email=email)
+                # If the user exists but the password is incorrect
+                messages.error(request, 'Incorrect password.')  # Add error message
+            except User.DoesNotExist:
+                # If the user does not exist
+                messages.error(request, 'User does not exist.')  # Add error message
+            
+            return redirect('clientsignin')  
     return render(request,redirect(reverse('consultancy:cs_potential_clients')))
 
 def home(request):
