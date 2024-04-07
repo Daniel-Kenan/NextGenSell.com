@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from django.http import JsonResponse
+from django.http import JsonResponse,HttpResponse 
 from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import get_object_or_404
 from datetime import datetime
@@ -15,8 +15,14 @@ import os
 from django.contrib import messages
 from django.urls import reverse
 import json
-from django.contrib.auth.hashers import make_password
 from django.contrib.auth.models import User
+from .payfast import PayfastPayment
+from django.conf import settings
+from django.contrib.sites.shortcuts import get_current_site
+from django.urls import reverse
+import smtplib
+import ssl
+from email.message import EmailMessage
 
 def login_view(request):
     if request.method == 'POST':
@@ -49,7 +55,6 @@ def login_view(request):
 
 def home(request):
     return render(request,'home.html')
-
 
 def clientsignin(request):
     error_message = None
@@ -105,3 +110,60 @@ def clientsignin(request):
 #             return JsonResponse({'status': 'error', 'message': 'Invalid request parameters.'})
 
 # validate_product_key_view = api_view(['POST'])(permission_classes([AllowAny])(ValidateProductKeyView.as_view()))
+
+
+data = {
+    # Merchant details
+    'merchant_id': settings.GATEWAY_CONFIG['merchant_id'],
+    'merchant_key':settings.GATEWAY_CONFIG['merchant_key'],
+    'return_url': settings.SITE+"payment-successful/",
+    'cancel_url': settings.SITE+"payment-failed/",
+    'notify_url': 'https://www.nextgensell.com/err',
+    # Buyer details
+    'name_first': 'First Name',
+    'name_last': 'Last Name',
+    'email_address': 'test@test.com',
+    # Transaction details
+    'm_payment_id': '1234', #Unique payment ID to pass through to notify_url
+    'amount': "200",
+    'item_name': 'Order#123'
+}
+
+payfast_payment = PayfastPayment(data,settings.GATEWAY_CONFIG['passphrase'],sandbox_mode=settings.GATEWAY_CONFIG['mode'])
+html_form = payfast_payment.generate_html_form()
+# print(html_form)
+
+def testpage(request):
+    return render(request, 'testpage.html',{'form':html_form})
+
+
+def payment_success(request):
+    return render(request, 'payments/payment_success.html')
+
+def payment_failure(request):
+    return render(request, 'payments/payment_failure.html')
+
+
+def payment_cancelled(request):
+    return render(request, 'payments/payment_failure.html')
+
+
+
+class ContactUsHandling(View):
+    def post(self,request, *args, **kwargs):
+       try: 
+        tmp = request.POST
+        print(tmp)
+        # 'name': ['Daniel Kenan Slinda'], 'email': ['sdanielkenan@gmail.com'], 'subject': ['software'], 'message': ['GGG']
+        msg = EmailMessage()
+        msg['Subject'] = tmp['subject']
+        msg['From'] = os.environ.get('BOT_EMAIL')
+        msg['To'] = os.environ.get("BOT_MAILTO")
+        msg.set_content("Email From: " + tmp["email"] + "\n\nMessage:\n" + tmp["message"])
+        context = ssl.create_default_context()
+        with smtplib.SMTP_SSL('smtp.gmail.com',465,context=context) as smtp:
+            smtp.login(msg['From'],os.environ.get('BOT_PASSWD'))
+            smtp.sendmail(msg["From"],msg["To"],msg.as_string())
+        return HttpResponse("The message has been dispatched. You can expect a response within the next one to two business days.")
+       except Exception as e: 
+           return HttpResponse(str(e.message))

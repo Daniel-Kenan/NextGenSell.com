@@ -65,3 +65,9 @@ def add_client(request):
         return JsonResponse({'success': True})  # Send a JSON response indicating success
     else:
         return JsonResponse({'success': False}) 
+    
+
+
+
+
+   

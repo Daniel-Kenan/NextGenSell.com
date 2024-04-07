@@ -1,11 +1,16 @@
 from django.urls import path
-from .views import home, clientsignin, login_view
+from . import views 
 from django.views.decorators.csrf import csrf_exempt
 
 urlpatterns = [
-    path('', home, name="home"),
+    path('', views.home, name="home"),
     # path('validate-product-key-docs/<str:key>/<str:device>',validate_product_key_view, name='validate_product_key_docs'),
     # path('validate-product-key-api/<str:key>/<str:device>',ValidateProductKeyView.as_view(), name='validate_product_key_func'), 
-    path('signin',clientsignin, name="clientsignin"),
-     path('login/', login_view, name='login_view'),
+    path('signin',views.clientsignin, name="clientsignin"),
+    path('login/', views.login_view, name='login_view'),
+    path('5ftr4vt6bv4e/',views.testpage,name="testpage"),
+    path('payment-successful/' , views.payment_success, name='payment_successful'),
+     path('payment-failed/' , views.payment_failure, name='payment_failed'),
+     path('payment-cancelled/' , views.payment_cancelled, name='payment_cancelled'),
+     path('contact-us-form', views.ContactUsHandling.as_view(), name='contact-us-form')
 ]

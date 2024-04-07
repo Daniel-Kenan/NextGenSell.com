@@ -425,7 +425,7 @@
               <div class="email">
                 <i class="bi bi-envelope"></i>
                 <h4>Email:</h4>
-                <p>info@strawberrysoft.co.za</p>
+                <p>info@nextgensell.com</p>
               </div>
 
               <div class="phone">
@@ -437,7 +437,8 @@
           </div>
           <div class="col-lg-8 mt-5 mt-lg-0" data-aos="fade-left" data-aos-delay="200">
 
-            <form action="forms/contact.php" method="post" role="form" class="php-email-form">
+            <form action="{% url "contact-us-form" %}" method="post" role="form" class="php-email-form">
+              {% csrf_token %}
               <div class="row">
                 <div class="col-md-6 form-group">
                   <input type="text" name="name" class="form-control" id="name" placeholder="Your Name" required>

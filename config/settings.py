@@ -34,6 +34,7 @@ ALLOWED_HOSTS = ["*"]
 # Application definition
 
 INSTALLED_APPS = [
+    'channels',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -47,6 +48,7 @@ INSTALLED_APPS = [
     
     
 ]
+ASGI_APPLICATION = 'config.asgi.application'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -132,3 +134,14 @@ STATICFILES_DIRS = [
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+SITE = 'http://localhost:8000/'  if  DEBUG else 'https://www.nextgensell.com/'
+
+SANDBOX = True  # Example value, replace with your logic to determine sandbox status
+GATEWAY_CONFIG = {
+    'sandbox': SANDBOX,
+    'merchant_id': '10000100' if SANDBOX else os.environ.get('MERCHANT_ID'),
+    'merchant_key': '46f0cd694581a' if SANDBOX else os.environ.get('MERCHANT_KEY'),
+    'passphrase': 'jt7NOE43FZPn' if SANDBOX else os.environ.get('PAYFAST_SECRET'),
+    'mode':SANDBOX
+}

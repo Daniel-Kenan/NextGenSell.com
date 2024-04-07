@@ -35,15 +35,15 @@
       z-index: 1;
     }
   </style>
-  <%- include('partials/static.ejs') %>
-  
+  {% include 'partials/static.html' %}
+{% load static %}
 </head>
 <body>
-  <%- include('partials/header.ejs') %>
+  {% include 'partials/header.html' %}
   <section class="section2">
     <div class="container">
       <h1>Payment Successful!</h1>
-     <img src="/images/box-svgrepo-com.svg" alt="" height="150" width="150">
+     <img src={% static "/images/box-svgrepo-com.svg" %} alt="" height="150" width="150">
       <p>Your payment was successful. Thank you for choosing our services!</p>
     </div>
   
@@ -86,7 +86,7 @@
     </script>
     
   </section>  
-  <%- include('partials/footer.ejs') %>
-  <%- include('partials/vendor.ejs') %>
+  {% include 'partials/footer.html' %}
+  {% include 'partials/vendor.html' %}
 </body>
 </html>

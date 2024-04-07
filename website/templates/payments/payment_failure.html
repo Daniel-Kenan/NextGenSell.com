@@ -36,10 +36,10 @@
     }
     ul li{list-style-type:disc}
   </style>
-  <%- include('partials/static.ejs') %>
+  {% include 'partials/static.html' %}
 </head>
 <body>
-  <%- include('partials/header.ejs') %>
+  {% include 'partials/header.html' %}
   <section class="section2">
     <div class="container">
       <br><br>
@@ -67,10 +67,10 @@
     <!-- No confetti for a failed payment -->
   <script>
     document.getElementById("header").classList.remove("header-transparent");
-    document
+  
   </script>
   </section>  
-  <%- include('partials/footer.ejs') %>
-  <%- include('partials/vendor.ejs') %>
+  {% include 'partials/footer.html' %}
+  {% include 'partials/vendor.html' %}
 </body>
 </html>

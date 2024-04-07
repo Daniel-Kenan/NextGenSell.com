@@ -10,3 +10,4 @@ django-heroku
 psycopg2
 qrcode
 WhiteNoise
+channels==3.0.5

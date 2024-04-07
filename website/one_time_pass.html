@@ -55,88 +55,28 @@
 </head>
 <body>
 <div id="container">
-  <img src="lock_icon.png" alt="Lock Icon">
-  <h1>Hi Ashley, please create your password</h1>
-  <input type="password" id="password" placeholder="Enter your password">
-  <input type="password" id="verify-password" placeholder="Verify your password">
-  <div id="password-status"></div>
+  <form name="PayFastPayNowForm" action="https://payment.payfast.io/eng/process" method="post">
+    <input required type="hidden" name="cmd" value="_paynow">
+    <input required type="hidden" name="receiver" pattern="[0-9]" value="24262266">
+    <input required type="hidden" name="amount" value="100">
+    <input required type="hidden" name="item_name" maxlength="255" value="klef">
+    <input type="hidden" name="item_description" maxlength="255" value="fdfdffd">
+    <input required type="hidden" name="subscription_type" pattern="1"value="1">
+    <input type="hidden" name="recurring_amount" value="100">
+    <input required type="hidden" name="cycles" pattern="[0-9]" value="0">
+    <input required type="hidden" name="frequency" pattern="[0-9]" value="3">
+    <table>
+    <tr>
+    <td colspan=2 align=center>
+    <input type="image" src="https://my.payfast.io/images/buttons/Subscribe/Primary-Large-Subscribe.png" alt="Subscribe" title="Subscribe with Payfast">
+    </td>
+    </tr>
+    </table>
+    </form>
 </div>
 
 <script>
-const passwordInput = document.getElementById('password');
-const verifyPasswordInput = document.getElementById('verify-password');
-const passwordStatusDiv = document.getElementById('password-status');
 
-passwordInput.addEventListener('input', function() {
-  const password = passwordInput.value;
-  const verifyPassword = verifyPasswordInput.value;
-
-  // Check if password meets minimum length requirement
-  if (password.length < 8) {
-    showStatus('weak', 'Password strength: Weak');
-  } else {
-    // Check if password matches verification password
-    if (password === verifyPassword) {
-      showStatus('match', 'Passwords match');
-    } else {
-      showStatus('no-match', 'Passwords do not match');
-    }
-
-    // Determine password strength
-    const strength = calculatePasswordStrength(password);
-    let strengthText = '';
-
-    switch (strength) {
-      case 'weak':
-        strengthText = 'Password strength: Weak';
-        break;
-      case 'medium':
-        strengthText = 'Password strength: Medium';
-        break;
-      case 'strong':
-        strengthText = 'Password strength: Strong';
-        break;
-    }
-
-    // Display password strength
-    showStatus(strength, strengthText);
-  }
-});
-
-verifyPasswordInput.addEventListener('input', function() {
-  const password = passwordInput.value;
-  const verifyPassword = verifyPasswordInput.value;
-
-  // Check if passwords match
-  if (password === verifyPassword) {
-    showStatus('match', 'Passwords match');
-  } else {
-    showStatus('no-match', 'Passwords do not match');
-  }
-});
-
-function calculatePasswordStrength(password) {
-  // Just a dummy function, you can implement a more sophisticated one if needed
-  if (password.length < 10) {
-    return 'weak';
-  } else if (password.length < 14) {
-    return 'medium';
-  } else {
-    return 'strong';
-  }
-}
-
-function showStatus(className, message) {
-  // Hide all status classes
-  const statusClasses = ['weak', 'medium', 'strong', 'match', 'no-match'];
-  statusClasses.forEach(cls => {
-    passwordStatusDiv.classList.remove(cls);
-  });
-
-  // Show the appropriate status
-  passwordStatusDiv.textContent = message;
-  passwordStatusDiv.classList.add(className);
-}
 </script>
 </body>
 </html>
