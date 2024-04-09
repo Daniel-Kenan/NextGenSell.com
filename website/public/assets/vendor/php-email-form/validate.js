@@ -52,7 +52,7 @@
     fetch(action, {
       method: 'POST',
       body: formData,
-      headers: {'X-Requested-With': 'XMLHttpRequest','X-CSRF-TOKEN': csrfToken}
+      headers: {'X-CSRF-TOKEN': csrfToken}
     })
     .then(response => {
       alert(response)
