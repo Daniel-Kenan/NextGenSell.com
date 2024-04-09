@@ -46,10 +46,13 @@
   });
 
   function php_email_form_submit(thisForm, action, formData) {
+    
+    let csrfToken = document.getElementsByName("csrfmiddlewaretoken")[0].value
+    console.trace(csrfToken)
     fetch(action, {
       method: 'POST',
       body: formData,
-      headers: {'X-Requested-With': 'XMLHttpRequest'}
+      headers: {'X-Requested-With': 'XMLHttpRequest','X-CSRF-TOKEN': csrfToken}
     })
     .then(response => {
       alert(response)
