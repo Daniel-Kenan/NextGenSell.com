@@ -145,3 +145,8 @@ GATEWAY_CONFIG = {
     'passphrase': 'jt7NOE43FZPn' if SANDBOX else os.environ.get('PAYFAST_SECRET'),
     'mode':SANDBOX
 }
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticatedOrReadOnly'
+    ],
+}

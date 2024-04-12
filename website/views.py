@@ -23,31 +23,26 @@ from django.urls import reverse
 import smtplib
 import ssl
 from email.message import EmailMessage
+import re
 
 def login_view(request):
     if request.method == 'POST':
         email = request.POST.get('email')
         password = request.POST.get('password')
-        user = authenticate(request, email=email, password=password) 
-        tmp = User.objects.get(email="ashley.malebe@strawberrysoft.co.za")
-        email = email.strip() if email else ''
-        password = password.strip() if password else ''
-        print(f"email = {email}  : {tmp.email} ")
-        print(f"email = {password}  : {tmp.password} ")
-        # user = User.objects.get(email=email)
-        print(user)
-        if user is not None:
+        email_pattern = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
+        valid_email = re.match(email_pattern, email)
+        user = None
+        if valid_email and password:
+            user = authenticate(request, username=email, password=password)  
+        if user:
             login(request, user)
-            # Redirect to a success page or wherever you want
-            return redirect('success_page')
+            return redirect(reverse('consultancy:cs_potential_clients'))
         else:
             try:
                 # Attempt to get the user by email
                 user = User.objects.get(email=email)
-                # If the user exists but the password is incorrect
                 messages.error(request, 'Incorrect password.')  # Add error message
             except User.DoesNotExist:
-                # If the user does not exist
                 messages.error(request, 'User does not exist.')  # Add error message
             
             return redirect('clientsignin')  
