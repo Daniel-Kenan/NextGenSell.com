@@ -145,6 +145,9 @@ def payment_cancelled(request):
 
 
 class ContactUsHandling(View):
+    def get(self, request, *args, **kwargs):
+        return render(request, 'contact/contact.html')
+    
     def post(self,request, *args, **kwargs):
        try: 
         tmp = request.POST

@@ -13,4 +13,5 @@ urlpatterns = [
      path('payment-failed/' , views.payment_failure, name='payment_failed'),
      path('payment-cancelled/' , views.payment_cancelled, name='payment_cancelled'),
      path('contact-us-form/', views.ContactUsHandling.as_view(), name='contact-us-form')
+     
 ]

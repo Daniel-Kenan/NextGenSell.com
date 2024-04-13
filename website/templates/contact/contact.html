@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+
+  <title>Welcome to NextGenSell</title>
+  <meta content="" name="description">
+  <meta content="" name="keywords">
+  {% include 'partials/static.html' %}
+  <!-- Favicons -->
+</head>
+<body>
+
+  {% include 'partials/header.html' %}
+
+  {% include 'partials/contact.html' %}
+  {% include 'partials/footer.html' %}
+
+  <a href="#" class="back-to-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+  <div id="preloader"></div>
+  {% include 'partials/vendor.html' %}
+  <script>
+    document.getElementById("header").classList.remove("header-transparent")
+  </script>
+</body>
+
+</html>
