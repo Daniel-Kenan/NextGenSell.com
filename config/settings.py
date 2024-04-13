@@ -151,4 +151,4 @@ REST_FRAMEWORK = {
     ],
 }
 
-CSRF_TRUSTED_ORIGINS = ['nextgensell.com','www.nextgensell.com']
+CSRF_TRUSTED_ORIGINS = ['https://nextgensell.com','https://www.nextgensell.com']
