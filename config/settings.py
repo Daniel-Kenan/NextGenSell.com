@@ -23,12 +23,12 @@ import psycopg2
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-p2igf%7x++wpp01vqz^0^h6d7-gt!=)=6gzk0oib3-7)w*x0o6'
+SECRET_KEY = os.environ.get('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True if os.environ.get('DEBUG')  else False
 
-ALLOWED_HOSTS = ["*"]
+ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', '*').split(',')
 
 
 # Application definition
@@ -137,7 +137,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 SITE = 'http://localhost:8000/'  if  DEBUG else 'https://www.nextgensell.com/'
 
-SANDBOX = True  # Example value, replace with your logic to determine sandbox status
+SANDBOX = False  # Example value, replace with your logic to determine sandbox status
 GATEWAY_CONFIG = {
     'sandbox': SANDBOX,
     'merchant_id': '10000100' if SANDBOX else os.environ.get('MERCHANT_ID'),
