@@ -86,8 +86,8 @@ WSGI_APPLICATION = 'config.wsgi.application'
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
 DATABASES = {
-    'default':  
-      dj_database_url.config(default=os.environ.get('DATABASE_URL'))
+    'default': dj_database_url.config(default=os.environ.get('DATABASE_URL')) if not DEBUG 
+    else {'ENGINE': 'django.db.backends.sqlite3','NAME': BASE_DIR / 'db.sqlite3'}
 }
 
 # Password validation
@@ -150,5 +150,6 @@ REST_FRAMEWORK = {
         'rest_framework.permissions.IsAuthenticatedOrReadOnly'
     ],
 }
+
 
 CSRF_TRUSTED_ORIGINS = ['https://nextgensell.com','https://www.nextgensell.com']

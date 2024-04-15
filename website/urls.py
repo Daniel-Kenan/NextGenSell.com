@@ -12,6 +12,7 @@ urlpatterns = [
     path('payment-successful/' , views.payment_success, name='payment_successful'),
      path('payment-failed/' , views.payment_failure, name='payment_failed'),
      path('payment-cancelled/' , views.payment_cancelled, name='payment_cancelled'),
-     path('contact-us-form/', views.ContactUsHandling.as_view(), name='contact-us-form')
-     
+     path('contact-us-form/', views.ContactUsHandling.as_view(), name='contact-us-form'),
+     path('signout/', views.sign_out, name='sign-out'),
+    path('signup/', views.sign_up, name='sign-up'),
 ]

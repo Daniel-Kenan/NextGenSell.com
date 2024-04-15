@@ -24,6 +24,7 @@ import smtplib
 import ssl
 from email.message import EmailMessage
 import re
+from django.contrib.auth import logout
 
 def login_view(request):
     if request.method == 'POST':
@@ -52,42 +53,45 @@ def home(request):
     return render(request,'home.html')
 
 def clientsignin(request):
-    error_message = None
-    if 'error_message' in request.session:
-        error_message = request.session.pop('error_message')  # Retrieve and remove error message from session
-    
-    # Retrieve error messages from the messages framework
-    messages_data = messages.get_messages(request)
-    error_messages = [message for message in messages_data if message.level == messages.ERROR]
-
-    # Path to the existing QR code image
-    existing_qr_path = "public/images/qrcode"
-    
-    # Check if the QR code image exists
-    if os.path.exists(existing_qr_path):
-        # If it exists, render the template with the existing QR code image path and error messages
-        return render(request, 'sign-in/sign-in.html', {'qr_code_path': existing_qr_path, 'error_message': error_message, 'error_messages': error_messages})
+    if request.user.is_authenticated:
+        return redirect('home')  # Assuming 'home' is the name of your home page URL
     else:
-        # If it doesn't exist, generate a new QR code (similar to previous example)
-        # Generate QR code
-        qr = qrcode.QRCode(
-            version=1,
-            error_correction=qrcode.constants.ERROR_CORRECT_L,
-            box_size=10,
-            border=4,
-        )
-        # You can customize the data in the QR code as needed
-        qr.add_data("Some data here")
-        qr.make(fit=True)
-        img = qr.make_image(fill_color="black", back_color="white")
+        error_message = None
+        if 'error_message' in request.session:
+            error_message = request.session.pop('error_message')  # Retrieve and remove error message from session
+        
+        # Retrieve error messages from the messages framework
+        messages_data = messages.get_messages(request)
+        error_messages = [message for message in messages_data if message.level == messages.ERROR]
 
-        # Save the image or convert it to bytes
-        # In this example, I'm saving it temporarily
-        img_path = "path_to_save_qr_code.png"
-        img.save(img_path)
+        # Path to the existing QR code image
+        existing_qr_path = "public/images/qrcode"
+        
+        # Check if the QR code image exists
+        if os.path.exists(existing_qr_path):
+            # If it exists, render the template with the existing QR code image path and error messages
+            return render(request, 'sign-in/sign-in.html', {'qr_code_path': existing_qr_path, 'error_message': error_message, 'error_messages': error_messages})
+        else:
+            # If it doesn't exist, generate a new QR code (similar to previous example)
+            # Generate QR code
+            qr = qrcode.QRCode(
+                version=1,
+                error_correction=qrcode.constants.ERROR_CORRECT_L,
+                box_size=10,
+                border=4,
+            )
+            # You can customize the data in the QR code as needed
+            qr.add_data("Some data here")
+            qr.make(fit=True)
+            img = qr.make_image(fill_color="black", back_color="white")
 
-        # Render the template with the QR code image path and error messages
-        return render(request, 'sign-in/sign-in.html', {'qr_code_path': img_path, 'error_message': error_message, 'error_messages': error_messages})
+            # Save the image or convert it to bytes
+            # In this example, I'm saving it temporarily
+            img_path = "path_to_save_qr_code.png"
+            img.save(img_path)
+
+            # Render the template with the QR code image path and error messages
+            return render(request, 'sign-in/sign-in.html', {'qr_code_path': img_path, 'error_message': error_message, 'error_messages': error_messages})
 
 # @method_decorator(csrf_exempt, name='dispatch')
 # class ValidateProductKeyView(View):
@@ -151,7 +155,7 @@ class ContactUsHandling(View):
     def post(self,request, *args, **kwargs):
        try: 
         tmp = request.POST
-        print(tmp)
+       
         # 'name': ['Daniel Kenan Slinda'], 'email': ['sdanielkenan@gmail.com'], 'subject': ['software'], 'message': ['GGG']
         msg = EmailMessage()
         msg['Subject'] = tmp['subject']
@@ -165,3 +169,21 @@ class ContactUsHandling(View):
         return HttpResponse("The message has been dispatched. You can expect a response within the next one to two business days.")
        except Exception as e: 
            return HttpResponse(str(e.message))
+       
+
+
+def sign_up(request):
+    if request.user.is_authenticated:
+        return redirect('home')  # Assuming 'home' is the name of your home page URL
+    else:
+        return render(request, 'signup/signup.html')
+
+
+def sign_out(request):
+    logout(request)
+    # Redirect to a page after sign out, for example, the home page
+    return redirect('home')
+
+
+
+
