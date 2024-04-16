@@ -12,5 +12,5 @@ urlpatterns = [
     path('notifications/', views.notifications, name="cs_notifications"),
     path('profile/', views.profile, name="cs_profile"),
     path('bussiness/', views.bussiness_form, name="cs_Bform"),  
-     path('add-client/', views.add_client, name='add_client'), 
+    path('add-client/', views.add_client, name='add_client'), 
 ]
