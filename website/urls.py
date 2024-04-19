@@ -1,6 +1,7 @@
 from django.urls import path
 from . import views 
 from django.views.decorators.csrf import csrf_exempt
+from django.views.generic.base import RedirectView
 
 urlpatterns = [
     path('', views.home, name="home"),
@@ -14,5 +15,6 @@ urlpatterns = [
      path('payment-cancelled/' , views.payment_cancelled, name='payment_cancelled'),
      path('contact-us-form/', views.ContactUsHandling.as_view(), name='contact-us-form'),
      path('signout/', views.sign_out, name='sign-out'),
-    path('signup/', views.sign_up, name='sign-up'),
+    # path('signup/', views.sign_up, name='sign-up'),
+    path('signup/', RedirectView.as_view(pattern_name='contact-us-form'), name='sign-up'),
 ]
