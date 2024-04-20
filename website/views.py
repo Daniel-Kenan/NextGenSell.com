@@ -160,12 +160,14 @@ class ContactUsHandling(View):
         msg['Subject'] = "Completed contact form:NextGenSell"
         msg['From'] = os.environ.get('BOT_EMAIL')
         msg['To'] = os.environ.get("BOT_MAILTO")
-        msg.set_content("Email From: " + tmp["email"] + "\n\nMessage:\n" + tmp["message"])
+        msg.set_content("Email From: " + tmp["email"] +
+                         "Subjec:t" + tmp['subject']+"\n\n"+
+                         "\n\nMessage:\n" + tmp["message"])
         context = ssl.create_default_context()
         with smtplib.SMTP_SSL('smtp.gmail.com',465,context=context) as smtp:
             smtp.login(msg['From'],os.environ.get('BOT_PASSWD'))
             smtp.sendmail(msg["From"],msg["To"],msg.as_string())
-        return HttpResponse("The message has been sent. You can expect a response within the within 48hours.")
+        return HttpResponse("The message has been sent. You can expect a response in less than 48hours.")
        except Exception as e: 
            return HttpResponse(str(e.message))
        
