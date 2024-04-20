@@ -161,7 +161,7 @@ class ContactUsHandling(View):
         msg['From'] = os.environ.get('BOT_EMAIL')
         msg['To'] = os.environ.get("BOT_MAILTO")
         msg.set_content("Email From: " + tmp["email"] +
-                         "Subjec:t" + tmp['subject']+"\n\n"+
+                         "\nSubject" + tmp['subject']+"\n\n"+
                          "\n\nMessage:\n" + tmp["message"])
         context = ssl.create_default_context()
         with smtplib.SMTP_SSL('smtp.gmail.com',465,context=context) as smtp:
