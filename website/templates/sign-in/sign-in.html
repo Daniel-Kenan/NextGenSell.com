@@ -20,8 +20,8 @@
         --activatedCharcoal: #25252f;
         --activatedCharcoalFocus: rgba(var(--activatedCharcoal), 0.2);
         --activatedCharcoalBg: rgba(var(--activatedCharcoal), 0.1);
-        --purpleHero: #651edb;
-        --purpleHeroHover: #5118af;
+        --purpleHero: #F3BB45;
+        --purpleHeroHover: #F3BB45;
         --purpleHeroActive: #3D1283;
         --purpleHeroFocus: rgba(var(--purpleHero), 0.2);
         --radiusDefault: 4px;
@@ -82,6 +82,7 @@
     }
     button {
         background-color: var(--purpleHero);
+        opacity:0.8;
         color: white;
         padding: 12px 24px;
         margin: 8px 0;
@@ -98,9 +99,10 @@
         }
         &:hover {
             background-color: var(--purpleHeroHover);
+            opacity:1;
         }
         &:active {
-            background-color: var(--purpleHeroActive);
+            background-color: black;
         }
     }
     

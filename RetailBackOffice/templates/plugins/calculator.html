@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculator</title>
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Courier New", Courier, monospace;
+    }
+    body {
+        display: flex;
+        height: 100vh;
+        align-items: center;
+        justify-content: center;
+        background-color: #202020;
+        overflow: hidden;
+    }
+    .container {
+        position: relative;
+        min-width: 300px;
+        min-height: 400px;
+        padding: 40px 30px 30px;
+        border-radius: 20px;
+        box-shadow: 25px 25px 75px rgba(0, 0, 0, 0.25),
+            10px 10px 70px rgba(0, 0, 0, 0.25), inset -5px -5px 15px rgba(0, 0, 0, 0.25),
+            inset 5px 5px 15px rgba(0, 0, 0, 0.25);
+    }
+    .container span {
+        color: #fff;
+        position: relative;
+        display: grid;
+        width: 80px;
+        place-items: center;
+        margin: 8px;
+        height: 80px;
+        background: linear-gradient(180deg, #2f2f2f, #3f3f3f);
+        box-shadow: inset -8px 0 8px rgba(0, 0, 0, 0.15),
+            inset 0 -8px 8px rgba(0, 0, 0, 0.25), 0 0 0 2px rgba(0, 0, 0, 0.75),
+            10px 20px 25px rgba(0, 0, 0, 0.4);
+        user-select: none;
+        cursor: pointer;
+        font-weight: 400;
+        border-radius: 10px;
+    }
+    .calculator span:active {
+        filter: brightness(1.5);
+    }
+    .calculator span::before {
+        content: "";
+        position: absolute;
+        top: 3px;
+        left: 4px;
+        bottom: 14px;
+        right: 12px;
+        border-radius: 10px;
+        background: linear-gradient(90deg, #2d2d2d, #4d4d4d);
+        box-shadow: -5px -5px 15px rgba(0, 0, 0, 0.1),
+            10px 5px 10px rgba(0, 0, 0, 0.15);
+        border-left: 1px solid #0004;
+        border-bottom: 1px solid #0004;
+        border-top: 1px solid #0009;
+    }
+    .calculator span i {
+        position: relative;
+        font-style: normal;
+        font-size: 1.5em;
+        text-transform: uppercase;
+    }
+    .calculator {
+        position: relative;
+        display: grid;
+    }
+    .calculator .value {
+        position: relative;
+        grid-column: span 4;
+        height: 100px;
+        width: calc(100% - 20px);
+        left: 10px;
+        border: none;
+        outline: none;
+        background-color: #a7af7c;
+        margin-bottom: 10px;
+        border-radius: 10px;
+        box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.75);
+        text-align: right;
+        padding: 10px;
+        font-size: 2em;
+    }
+    .calculator .clear {
+        grid-column: span 2;
+        width: 180px;
+        background: #f00;
+    }
+    .calculator .clear::before {
+        background: linear-gradient(90deg, #d20000, #ffffff5c);
+        border-left: 1px solid #fff4;
+        border-bottom: 1px solid #fff4;
+        border-top: 1px solid #fff4;
+    }
+    .calculator .plus {
+        grid-row: span 2;
+        height: 180px;
+    }
+    .calculator .equal {
+        background: #2196f3;
+    }
+    .calculator .equal::before {
+        background: linear-gradient(90deg, #1479c9, #ffffff5c);
+        border-left: 1px solid #fff4;
+        border-bottom: 1px solid #fff4;
+        border-top: 1px solid #fff4;
+    }
+</style>
+</head>
+<body>
+    <div class="container">
+        <form action="" name="calc" class="calculator">
+            <input type="text" class="value" readonly name="txt" />
+            <span class="num clear" data-action="clear" onclick="handleClearClick()"><i>C</i></span>
+            <span class="num" data-action="/" onclick="handleOperatorClick('/')"><i>/</i></span>
+            <span class="num" data-action="*" onclick="handleOperatorClick('*')"><i>*</i></span>
+            <span class="num" data-action="7" onclick="handleNumberClick('7')"><i>7</i></span>
+            <span class="num" data-action="8" onclick="handleNumberClick('8')"><i>8</i></span>
+            <span class="num" data-action="9" onclick="handleNumberClick('9')"><i>9</i></span>
+            <span class="num" data-action="-" onclick="handleOperatorClick('-')"><i>-</i></span>
+            <span class="num" data-action="4" onclick="handleNumberClick('4')"><i>4</i></span>
+            <span class="num" data-action="5" onclick="handleNumberClick('5')"><i>5</i></span>
+            <span class="num" data-action="6" onclick="handleNumberClick('6')"><i>6</i></span>
+            <span class="num plus" data-action="+" onclick="handleOperatorClick('+')"><i>+</i></span>
+            <span class="num" data-action="1" id="1" onclick="handleNumberClick('1')"><i>1</i></span>
+            <span class="num" data-action="2" onclick="handleNumberClick('2')"><i>2</i></span>
+            <span class="num" data-action="3" onclick="handleNumberClick('3')"><i>3</i></span>
+            <span class="num" data-action="0" onclick="handleNumberClick('0')"><i>0</i></span>
+            <span class="num" data-action="00" onclick="handleNumberClick('00')"><i>00</i></span>
+            <span class="num" data-action="." onclick="handleNumberClick('.')"><i>.</i></span>
+            <span class="num equal" data-action="equal" onclick="handleEqualClick()"><i>=</i></span>
+        </form>
+    </div>
+
+    <script>
+        function handleNumberClick(number) {
+            document.calc.txt.value += number;
+        }
+
+        function handleOperatorClick(operator) {
+            document.calc.txt.value += ' ' + operator + ' ';
+        }
+
+        function handleEqualClick() {
+            const expression = document.calc.txt.value;
+            try {
+                document.calc.txt.value = eval(expression.replace(/\s+/g, ''));
+            } catch (error) {
+                document.calc.txt.value = 'Error';
+            }
+        }
+
+        function handleClearClick() {
+            document.calc.txt.value = '';
+        }
+
+        document.addEventListener('keydown', function(event) {
+            const key = event.key;
+
+            if (!isNaN(key) && key !== ' ') {
+                // If the key is a number
+                handleNumberClick(key);
+            } else if (key === '+' || key === '-' || key === '*' || key === '/') {
+                // If the key is an operator
+                handleOperatorClick(key);
+            } else if (key === 'Enter') {
+                // If the key is Enter, simulate click on the "=" button
+                handleEqualClick();
+            } else if (key === 'Backspace') {
+                // If the key is Backspace, simulate click on the "C" button
+                handleClearClick();
+            } else if (key === 'c' || key === 'C') {
+                // If the key is C, simulate click on the "C" button
+                handleClearClick();
+            } else if (key === '.') {
+                // If the key is ., simulate click on the "." button
+                handleNumberClick('.');
+            }
+        });
+    </script>
+</body>
+</html>

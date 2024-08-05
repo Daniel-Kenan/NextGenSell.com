@@ -1,7 +1,6 @@
 from django.db import models
 
 
-
 class BusinessInfo(models.Model):
     name = models.CharField(max_length=255)
     contact_name = models.CharField(max_length=255, blank=True)
@@ -27,7 +26,6 @@ class Client(models.Model):
     employees = models.PositiveIntegerField(blank=True, null=True)
     locations = models.PositiveIntegerField(blank=True, null=True)
     years_in_operation = models.PositiveIntegerField(blank=True, null=True)
-
     current_pos_system = models.CharField(max_length=255, blank=True)
     reasons_for_change = models.TextField(blank=True)
     challenges_with_current_system = models.TextField(blank=True)
@@ -78,9 +76,6 @@ class Client(models.Model):
     def __str__(self):
         return self.business_info.name
 
-
-
-
 class Device(models.Model):
     client = models.ForeignKey(Client, on_delete=models.CASCADE)
     device_name = models.CharField(max_length=255)
@@ -89,14 +84,12 @@ class Device(models.Model):
     def __str__(self):
         return f"{self.device_name} - {self.client.business_info.name}"
     
-
 class Payment(models.Model):
     client = models.ForeignKey(Client, on_delete=models.CASCADE)
     amount = models.DecimalField(max_digits=10, decimal_places=2)
     payment_date = models.DateField()
     subscription_start_date = models.DateField()
     subscription_end_date = models.DateField()
-
 
 
 class Doc(models.Model):

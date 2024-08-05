@@ -45,8 +45,7 @@ INSTALLED_APPS = [
     'rest_framework_swagger',
     'website',
     'consultant',
-    
-    
+    'RetailBackOffice'
 ]
 ASGI_APPLICATION = 'config.asgi.application'
 
@@ -129,6 +128,7 @@ STATIC_ROOT = BASE_DIR / 'static'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'website', 'public'),
     os.path.join(BASE_DIR, 'consultant', 'public'),
+    os.path.join(BASE_DIR, 'RetailBackOffice', 'public'),
 ]
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field

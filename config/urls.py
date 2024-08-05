@@ -44,7 +44,8 @@ urlpatterns = [
     ), name='swagger-ui'),
     path('admin/', admin.site.urls),
     path("",include("website.urls")),
-    path("cs/",include("consultant.urls"))
+    path("cs/",include("consultant.urls")),
+    path("RetailBackOffice/",include("RetailBackOffice.urls"))
 
 ]
 if settings.DEBUG:

@@ -6,7 +6,6 @@ from website.models import BusinessInfo
 from django.http import JsonResponse
 import json
 
-# BusinessInfo  it is more of a lead and we register this lead
 
 @login_required
 @staff_member_required
@@ -65,9 +64,3 @@ def add_client(request):
         return JsonResponse({'success': True})  # Send a JSON response indicating success
     else:
         return JsonResponse({'success': False}) 
-    
-
-
-
-
-   
