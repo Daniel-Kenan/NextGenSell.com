@@ -25,6 +25,9 @@ import ssl
 from email.message import EmailMessage
 import re
 from django.contrib.auth import logout
+from django.shortcuts import render, redirect
+from django.views.decorators.http import require_POST
+from django.http import HttpResponse
 
 def login_view(request):
     if request.method == 'POST':
@@ -179,6 +182,25 @@ def sign_up(request):
     else:
         return render(request, 'signup/signup.html')
 
+
+@require_POST
+def submit_form(request):
+    # Process the form data here
+    firstname = request.POST.get('firstname')
+    lastname = request.POST.get('lastname')
+    email = request.POST.get('email')
+    jobb = request.POST.getlist('jobb')  # Assuming jobb is a list of checkboxes
+
+    # Perform any necessary processing with the form data
+    
+    # For demonstration purposes, let's assume we redirect to a success page
+    print({
+        'firstname': firstname,
+        'lastname': lastname,
+        'email': email,
+        'jobb': jobb,
+    })
+    return redirect('/')
 
 def sign_out(request):
     logout(request)

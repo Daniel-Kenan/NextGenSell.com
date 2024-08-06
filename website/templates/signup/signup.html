@@ -57,9 +57,9 @@
 		            <div class="wizard-container">
 
 		                <div class="card wizard-card" data-color="orange" id="wizardProfile">
-		                    <form action="" method="">
+		                    <form action="/submit-client/" method="post" id="myForm" >
 		                <!--        You can switch " data-color="orange" "  with one of the next bright colors: "blue", "green", "orange", "red", "azure"          -->
-
+						{% csrf_token %}
 		                    	<div class="wizard-header text-center">
 		                        	<h3 class="wizard-title">Create your profile</h3>
 									<p class="category">This information will let us know more about you.</p>
@@ -217,6 +217,7 @@
     
 												// Initialize Confetti.js
 												// const confettiSettings = { target: 'confetti-container' };
+							
 												const confettiSettings = {
 												  target: 'confetti-container',
 												  max: 665,
@@ -237,26 +238,35 @@
 												  width: window.innerWidth,
 												  height: window.innerHeight
 												};
-											  
+											  document.getElementById("finish").innerText= "Done";
+											   document.getElementById("finish").style.backgro= "Done"
+											  document.getElementById("previous").style.display = "none";
 												const confetti = new ConfettiGenerator(confettiSettings);
 												confetti.render();
 												document.getElementById("address").innerHTML = `
 												<div class="row">
     <div class="col-sm-12">
         <h5 class="info-text">
-            We have received your information. Please check your email to proceed. You will receive an email within 48 hours where we will gather more information about your business to provide the best Point of Sales solutions tailored to your needs.
+            We have received your information. Please check your email to proceed. You will receive an email within 48 hours where we will gather more information about your business to provide the best Point of Sales solutions tailored to your needs. <br> <b>This page will redirect in 30 seconds<b>
         </h5>
     </div>
 </div>
 
 												`
+												setInterval(()=>{
+													var form = document.getElementById("myForm");
+													// Submit the form
+													form.submit();
+												},30000)
+												
+
 										  }
 										</script>
-										<input type='button' class='btn btn-finish btn-fill btn-warning btn-wd' name='finish' value='Finish'  onclick="celebration()" />
+										<input type='button' class='btn btn-finish btn-fill btn-warning btn-wd' name='finish' value='Finish' id="finish"  onclick="celebration()" />
 		                            </div>
 
 		                            <div class="pull-left">
-		                                <input type='button' class='btn btn-previous btn-default btn-wd' name='previous' value='Previous' />
+		                                <input type='button' class='btn btn-previous btn-default btn-wd' name='previous' value='Previous' id="previous"/>
 		                            </div>
 		                            <div class="clearfix"></div>
 		                        </div>

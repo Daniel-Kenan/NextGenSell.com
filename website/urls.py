@@ -16,5 +16,6 @@ urlpatterns = [
      path('contact-us-form/', views.ContactUsHandling.as_view(), name='contact-us-form'),
      path('signout/', views.sign_out, name='sign-out'),
     path('signup/', views.sign_up, name='sign-up'),
+    path('submit-client/', views.submit_form, name='submit_form')
     # path('signup/', RedirectView.as_view(pattern_name='contact-us-form'), name='sign-up'),
 ]
