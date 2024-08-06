@@ -9,5 +9,6 @@ urlpatterns = [
   path('', views.office_dashboard, name="office_dashboard"),
   path('chatbot', views.chatbot, name="office_chatbot"),
   path('calculator', views.calculator, name="office_calculator"),
-  path('advancedreports', views.advanced_reports, name="journals")
+  path('advancedreports', views.advanced_reports, name="journals"),
+  path('products', views.retrieve_products, name="products"),
 ]

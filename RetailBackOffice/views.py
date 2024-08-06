@@ -54,3 +54,7 @@ def calculator(request):
 
 def advanced_reports(request):
     return render(request, 'advancedreports.html')
+
+
+def retrieve_products(request):
+    return render(request, 'tables.html')
