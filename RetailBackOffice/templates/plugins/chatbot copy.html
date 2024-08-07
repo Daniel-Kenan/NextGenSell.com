@@ -802,10 +802,9 @@
           });
         });
       </script>
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.min.js"></script>
       <script>
         document.addEventListener('DOMContentLoaded', () => {
-          const socket = io('http://127.0.0.1:8765/');
+          const socket = io('https://nextgenai-production.up.railway.app');
 
           // Handle connection
           socket.on('connect', () => {
@@ -822,10 +821,7 @@
           socket.on('message', (messageData) => {
               addMessageToChat(messageData, false); // Assuming false for non-owner messages
           });
-          
-          socket.on('response', (data) => {
-            addMessageToChat(data, false);
-        });
+
           // Handle disconnection
           socket.on('disconnect', () => {
               console.log('Disconnected from the Socket.IO server');
@@ -875,8 +871,7 @@
               messageElement.appendChild(textElement);
               messagesContainer.appendChild(messageElement);
               messagesContainer.scrollTop = messagesContainer.scrollHeight;
-          };
-        })
+          };})
       </script>
       
     <script>
