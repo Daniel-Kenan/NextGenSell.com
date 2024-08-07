@@ -806,15 +806,24 @@
       <script>
         document.addEventListener('DOMContentLoaded', () => {
           const socket = io('https://nextgenai-production.up.railway.app/');
-
+          var isInitialisedChat = 0 ; 
           // Handle connection
           socket.on('connect', () => {
               console.log('Connected to the Socket.IO server');
+              updateStatus('connected');
+             if(!isInitialisedChat){
               const timeOfDay = getTimeOfDay();
               const message = getRandomMessage(timeOfDay);
-              updateStatus('connected');
               addMessageToChat(message, false); // Message from the server
               addMessageToChat("I am Omphile, your personal AI assistant.", false);
+            isInitialisedChat++;  
+            }else if(isInitialisedChat ==1){
+              addMessageToChat("Hey, I am back  online. I might have forgotten what we spoke about earlier on, but feel free to remind me if neccesary.", false);
+              isInitialisedChat++;
+            }
+            else{
+              addMessageToChat("Hey, I am back  online.", false);
+             }
               console.log('Connected to the Socket.IO server');
           });
 
