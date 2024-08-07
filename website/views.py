@@ -29,6 +29,30 @@ from django.shortcuts import render, redirect
 from django.views.decorators.http import require_POST
 from django.http import HttpResponse
 
+
+
+def send_email(email, subject, message):
+    """
+    Sends an email using the specified parameters.
+    
+    Parameters:
+    - email (str): The sender's email address.
+    - subject (str): The subject of the email.
+    - message (str): The body of the email.
+    """
+    
+    msg = EmailMessage()
+    msg['Subject'] = "Completed contact form: NextGenSell"
+    msg['From'] = os.environ.get('BOT_EMAIL')
+    msg['To'] = os.environ.get("BOT_MAILTO")
+    msg.set_content(f"Email From: {email}\nSubject: {subject}\n\nMessage:\n{message}")
+    
+    context = ssl.create_default_context()
+    
+    with smtplib.SMTP_SSL('smtp.gmail.com', 465, context=context) as smtp:
+        smtp.login(msg['From'], os.environ.get('BOT_PASSWD'))
+        smtp.sendmail(msg['From'], msg['To'], msg.as_string())
+
 def login_view(request):
     if request.method == 'POST':
         email = request.POST.get('email')
@@ -194,12 +218,14 @@ def submit_form(request):
     # Perform any necessary processing with the form data
     
     # For demonstration purposes, let's assume we redirect to a success page
-    print({
+    info = {
         'firstname': firstname,
         'lastname': lastname,
         'email': email,
         'jobb': jobb,
-    })
+    }
+    send_email(email,"signup form completed",str(info) )
+
     return redirect('/')
 
 def sign_out(request):
